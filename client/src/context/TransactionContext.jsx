@@ -51,22 +51,21 @@ export const TransactionProvider = ({children}) => {
 
     const checkIfWalletIsConnected = async () => {
         try {
-            if(!ethereum) return alert("Please install metamask");
-        
-            const accounts = await ethereum.request({method: 'eth_accounts'});
-
-            if(accounts.length) {
-                setCurrentAccount(accounts[0]);
-
-                getAllTransactions();
+            if (!ethereum) return alert("Please install MetaMask.");
+      
+            const accounts = await ethereum.request({ method: "eth_accounts" });
+      
+            if (accounts.length) {
+              setCurrentAccount(accounts[0]);
+      
+              getAllTransactions();
             } else {
-                console.log('No accounts found');
-            }    
-        } catch (error) {
+              console.log("No accounts found");
+            }
+          } catch (error) {
             console.log(error);
-            throw new Error("No ethereum object.")
-        }
-    }
+          }
+    };
 
     const checkIfTransactionsExist = async () => {
         try {
@@ -83,16 +82,18 @@ export const TransactionProvider = ({children}) => {
 
     const connectWallet = async () => {
         try {
-            if(!ethereum) return alert("Please install metamask");
-            
-            const accounts = await ethereum.request({method: 'eth_requestAccounts'});
-            setCurrentAccount(accounts[0]);
-
+          if (!ethereum) return alert("Please install MetaMask.");
+    
+          const accounts = await ethereum.request({ method: "eth_requestAccounts", });
+    
+          setCurrentAccount(accounts[0]);
+          window.location.reload();
         } catch (error) {
-            console.log(error);
-            throw new Error("No ethereum object.")
+          console.log(error);
+    
+          throw new Error("No ethereum object");
         }
-    } 
+      };
 
     const sendTransaction = async () => {
         try {
